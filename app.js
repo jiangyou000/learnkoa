@@ -1,7 +1,9 @@
+// const Koa = require('koa')
+// const Router = require('koa-router')
 const Koa = require('./src/application')
-
+const Router = require('./src/middleware/koa-router')
 const app = new Koa()
-
+const router = new Router()
 
 let fn1 = function(){
     return new Promise(resolve=>{
@@ -16,6 +18,20 @@ let fn2 = function(){
         console.log('异步fn2')
     },3000)
 }
+router.get('/index',async (ctx,next)=>{
+    console.log('进入 /index')
+    ctx.body = 'index page'
+})
+router.get('/page',async (ctx,next)=>{
+    console.log('进入 /page')
+    ctx.body = 'page page'
+})
+router.get('/news',async (ctx,next)=>{
+    console.log('进入 /news')
+    ctx.body = 'news page'
+    await next()
+})
+app.use(router.routes())
 app.use(async(ctx,next)=>{
     console.log('1')
     console.log(ctx.url)

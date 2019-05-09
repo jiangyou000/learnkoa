@@ -1,6 +1,6 @@
 module.exports = {
     get body(){
-        return thiis._body;
+        return this._body;
     },
     set body(body){
         this._body = body;
